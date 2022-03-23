@@ -44,6 +44,23 @@ class Airplane {
 */
 
 class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+    this.stomach = [];
+  }
+  
+  eat(someFood) {
+    if (this.stomach.length < 10) this.stomach.push(someFood);
+    return this.stomach;
+  }
+  poop() {
+    this.stomach = [];
+    return this.stomach;
+  }
+  toString() {
+    return `${this.name}, ${this.age}`;
+  }
   
 }
 
@@ -62,6 +79,31 @@ class Person {
 */
 
 class Car {
+  constructor(model, milesPerGallon) {
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
+  }
+
+  fill(gallons) {
+    this.tank += gallons;
+    return this.tank;
+  }
+ 
+  drive(distance) {
+    while (distance > 0 && this.tank > 0) {
+      this.tank -= 1/this.milesPerGallon;
+      distance--;
+      this.odometer++;
+      if (this.tank <= 0) {
+        this.tank = Math.abs(Math.round(this.tank));
+        return `I ran out of fuel at ${this.odometer} miles!`;
+      }
+    }
+    this.tank = Math.abs(Math.round(this.tank));
+    return this.odometer;
+  }
   
 }
 
@@ -79,7 +121,15 @@ class Car {
 */
 
 class Lambdasian {
-  
+  constructor(attrs) {
+    this.name = attrs["name"];
+    this.age = attrs["age"];
+    this.location = attrs["location"];
+  }
+
+  speak() {
+    return `Hello my name is ${this.name}, I am from ${this.location}.`;
+  } 
 }
 
 /*
@@ -97,7 +147,21 @@ class Lambdasian {
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
 
-class Instructor {
+class Instructor extends Lambdasian {
+  constructor(attrs) {
+    super(attrs);
+    this.specialty = attrs["specialty"];
+    this.favLanguage = attrs["favLanguage"];
+    this.catchPhrase = attrs["catchPhrase"];
+    
+    }
+
+  demo(subject) {
+    return `Today we are learning about ${subject}`;
+  }
+  grade(student, subject) {
+    return `${student.name} receives a perfect score on ${subject}`;
+  }
 
 }
 
