@@ -162,6 +162,10 @@ class Instructor extends Lambdasian {
   grade(student, subject) {
     return `${student.name} receives a perfect score on ${subject}`;
   }
+  changeGrade(student) {
+    student.grade += Math.round(Math.random()*6 - 3);
+    return student.grade;
+  }
 
 }
 
@@ -187,6 +191,7 @@ class Student extends Lambdasian {
     this.previousBackground = attrs.previousBackground;
     this.className = attrs.className;
     this.favSubjects = attrs.favSubjects;
+    this.grade = Math.floor(Math.random() * 101);
   }
   listSubjects() {
     if (this.favSubjects.length < 1) return '';
@@ -197,7 +202,14 @@ class Student extends Lambdasian {
   }
   sprintChallenge(subject) {
     return `${this.name} has submitted a sprint challenge on ${subject}`;
-  } 
+  }
+  graduate() {
+    if (this.grade >= 70) {
+      return `Congratulations! ${this.name} graduated from BloomTech!`;
+    } else {
+      return `Don't get discouraged! ${this.name}, you're not ready to graduate from BloomTech yet! But keep going! You'll get there eventually!`;
+    } 
+  }
 }
 
 /*
@@ -230,7 +242,6 @@ class ProjectManager extends Instructor {
   }   
 }
 
-
 /*
   STRETCH PROBLEM (no tests!)
     - Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
@@ -239,6 +250,33 @@ class ProjectManager extends Instructor {
       + This method, when called, will check the grade of the student and see if they're ready to graduate from BloomTech
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
 */
+
+
+/********** TESTING STRETCH TASK FUNCTIONALITY **********/
+
+const mack = new Student({name:'Mack',age:21,location:'Storm Lake',previousBackground:'thrift store cashier',className:'Web',favSubjects:['JavaScript','the lambda calculus','UNIX']});
+
+const ari = new Instructor({name:'Ari',age:22,location:'<DATA EXPUNGED>',specialty:'making the numbers go up',favLanguage:'[REDACTED]',catchPhrase:'Fatalism is always wrong.'});
+
+console.log(); console.log('Mack:'); console.log(mack); console.log(); console.log("Mack's grade:"); console.log(mack.grade); console.log();
+console.log(); console.log('Ari:'); console.log(ari); console.log();
+
+const oldGrade = mack.grade;
+
+console.log('Ari will now change Mack\'s grade.');
+
+ari.changeGrade(mack);
+console.log(`There! Ari changed Mack's grade from ${oldGrade} to ${mack.grade}`);
+
+console.log(); console.log('Now we\'ll see if Mack is ready to graduate.');
+console.log(); console.log('?'); console.log();
+
+console.log(mack.graduate());
+console.log();
+
+/********** END TEST OF STRETCH TASK **********/
+
+
 
 
 //End of Challenge
